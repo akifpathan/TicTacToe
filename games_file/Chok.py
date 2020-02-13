@@ -2,6 +2,7 @@ import tkinter as tk
 import turtle as tl
 import time
 import random_ai
+import real_ai
 
 #current_player="O"
 class Board():
@@ -9,15 +10,19 @@ class Board():
         Board.current_player=current_player
         Board.master=master
     cells=[]
+    board=[]
     flag=1
     def newboard(self):
         Board.cells.clear()
+        Board.board.clear()
         Board.current_player="O"
         for i in range(3):
             Board.cells.append([])
+            Board.board.append([])
         for i in range(3):
             for j in range(3):
                 Board.cells[i].append(Box(i,j))
+                Board.board[i].append(".")
 
     
 class Box():
@@ -60,7 +65,8 @@ class Box():
             self.change_player()
             self.checkwin()
             if Board.current_player=="X":
-                random_ai.computers_move()
+                real_ai.ai_move()
+                #random_ai.computers_move()
                 self.change_player()
                 self.checkwin()
             Board.flag=1
@@ -79,6 +85,7 @@ class Box():
         
         
         self.value=Board.current_player
+        Board.board[self.row][self.column]=Board.current_player
         
      
     def draw(self,x):
@@ -209,5 +216,6 @@ class Box():
         else:
             time.sleep(2)
             Board.newboard(self)
- 
+
+
  
